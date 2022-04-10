@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { SummaryOption, SummaryOptionStatus } from "../_models/question.model";
+import { QuestionAnswer, QuestionOption, SummaryOption, SummaryOptionStatus } from "../_models/question.model";
 
 @Component({
   selector: 'app-multi-select-question',
@@ -8,7 +8,7 @@ import { SummaryOption, SummaryOptionStatus } from "../_models/question.model";
 })
 export class MultiSelectQuestionComponent implements OnInit {
   @Input()
-  options: string[] = [];
+  options: QuestionOption[] = [];
   @Input()
   correctAmountOfOptions = 2;
   @Input()
@@ -16,21 +16,21 @@ export class MultiSelectQuestionComponent implements OnInit {
   @Input()
   summaryOptions: SummaryOption[] = [];
 
-  selectedOptions: string[] = [];
+  selectedOptions: QuestionOption[] = [];
 
   @Output()
-  allOptionsSelected = new EventEmitter<string[]>();
+  allOptionsSelected = new EventEmitter<QuestionOption[]>();
 
   constructor() { }
 
   ngOnInit(): void {
   }
 
-  optionChecked(optionValue: string, checked: boolean) {
+  optionChecked(changedOption: QuestionOption, checked: boolean) {
     if(checked){
-      this.selectedOptions.push(optionValue);
+      this.selectedOptions.push(changedOption);
     }else{
-      this.selectedOptions = this.selectedOptions.filter(o => o !== optionValue);
+      this.selectedOptions = this.selectedOptions.filter(o => o.value !== changedOption.value);
     }
 
     if(this.selectedOptions.length === this.correctAmountOfOptions){
@@ -39,15 +39,15 @@ export class MultiSelectQuestionComponent implements OnInit {
   }
 
   getSummaryOption(option: string){
-    return this.summaryOptions.find(o => o.value === option);
+    return this.summaryOptions.find(o => o.option.value === option);
   }
 
-  isChecked(option: string): boolean {
-    return !!this.getSummaryOption(option);
+  isChecked(option: QuestionOption): boolean {
+    return !!this.getSummaryOption(option.value);
   }
 
-  showAsCorrect(option: string) {
-    const associatedSummaryOption = this.getSummaryOption(option);
+  showAsCorrect(option: QuestionOption) {
+    const associatedSummaryOption = this.getSummaryOption(option.value);
 
     if(!associatedSummaryOption){
       return false;
@@ -56,8 +56,8 @@ export class MultiSelectQuestionComponent implements OnInit {
     return associatedSummaryOption.status === SummaryOptionStatus.correct;
   }
 
-  showAsIncorrect(option: string) {
-    const associatedSummaryOption = this.getSummaryOption(option);
+  showAsIncorrect(option: QuestionOption) {
+    const associatedSummaryOption = this.getSummaryOption(option.value);
 
     if(!associatedSummaryOption){
       return false;
@@ -66,8 +66,8 @@ export class MultiSelectQuestionComponent implements OnInit {
     return associatedSummaryOption.status === SummaryOptionStatus.incorrect;
   }
 
-  showAsMissing(option: string) {
-    const associatedSummaryOption = this.getSummaryOption(option);
+  showAsMissing(option: QuestionOption) {
+    const associatedSummaryOption = this.getSummaryOption(option.value);
 
     if(!associatedSummaryOption){
       return false;

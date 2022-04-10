@@ -8,10 +8,10 @@
     [class.summary-correct]="showAsCorrect(option)"
     [class.summary-incorrect]="showAsIncorrect(option)"
     [class.summary-missing]="showAsMissing(option)"
-    [value]="option"
+    [value]="option.value"
     [disabled]="disabled"
     [checked]="isChecked(option)"
   >
-    {{option}}
+    {{option.value}}. {{option.label}}
   </mat-radio-button>
 </mat-radio-group>

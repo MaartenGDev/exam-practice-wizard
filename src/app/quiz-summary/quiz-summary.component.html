@@ -23,6 +23,7 @@
       <span class="answer-result-label"
             [class.correct-answer]="isAnsweredCorrectly(answer)"
             [class.incorrect-answer]="!isAnsweredCorrectly(answer)">{{isAnsweredCorrectly(answer) ? 'Correct' : 'Incorrect'}}</span>
+      <br />
       {{answer.question.explanation}}</p>
   </div>
 

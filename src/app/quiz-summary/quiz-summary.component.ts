@@ -6,7 +6,7 @@ import { QuestionAnswer, SummaryOption, SummaryOptionStatus } from "../_models/q
   templateUrl: './quiz-summary.component.html',
   styleUrls: ['./quiz-summary.component.scss']
 })
-export class QuizSummaryComponent implements OnChanges {
+export class QuizSummaryComponent{
   @Input()
   answers: QuestionAnswer[] = [];
 
@@ -16,25 +16,29 @@ export class QuizSummaryComponent implements OnChanges {
   constructor() { }
 
   public isAnsweredCorrectly(questionAnswer: QuestionAnswer){
-    return questionAnswer.question.correctOptions.every(option => questionAnswer.selectedOptions.includes(option));
+    return questionAnswer.question.correctOptions
+      .every(option => questionAnswer.selectedOptions.some(so => so.value === option));
   }
 
   getAmountOfCorrectQuestions() {
     return this.answers.filter(a => this.isAnsweredCorrectly(a)).length;
   }
 
-  getAsSummaryOptions(answer: QuestionAnswer) {
+  getAsSummaryOptions(answer: QuestionAnswer): SummaryOption[] {
     const wronglySelectedOptions: SummaryOption[] = answer.selectedOptions
-      .filter(o => !answer.question.correctOptions.includes(o))
-      .map(o => ({value: o, status: SummaryOptionStatus.incorrect}));
+      .filter(o => !answer.question.correctOptions.includes(o.value))
+      .map(o => ({option: o, status: SummaryOptionStatus.incorrect}));
 
-    const correctlySelectedOptions = answer.selectedOptions
-      .filter(o => answer.question.correctOptions.includes(o))
-      .map(o => ({value: o, status: SummaryOptionStatus.correct}));
+    const correctlySelectedOptions: SummaryOption[] = answer.selectedOptions
+      .filter(o => answer.question.correctOptions.includes(o.value))
+      .map(o => ({option: o, status: SummaryOptionStatus.correct}));
 
-    const missingSelectedOptions = answer.question.correctOptions
-      .filter(o => !answer.selectedOptions.includes(o))
-      .map(o => ({value: o, status: SummaryOptionStatus.missing}));
+    const missingSelectedOptions: SummaryOption[] = answer.question.correctOptions
+      .filter(o => !answer.selectedOptions.some(so => so.value === o))
+      .map(optionValue => {
+        const option = answer.question.options.find(optionDetails => optionDetails.value === optionValue)!;
+        return ({option: option, status: SummaryOptionStatus.missing})
+      });
 
 
     return [
@@ -46,9 +50,5 @@ export class QuizSummaryComponent implements OnChanges {
 
   restart() {
     this.restartQuiz.next();
-  }
-
-  ngOnChanges(changes: SimpleChanges): void {
-    console.log(changes);
   }
 }

@@ -1,17 +1,22 @@
 export interface Question {
   question: string;
-  options: string[];
+  options: QuestionOption[];
   correctOptions: string[];
   explanation: string;
 }
 
+export interface QuestionOption {
+  value: string;
+  label: string;
+}
+
 export interface QuestionAnswer {
   question: Question;
-  selectedOptions: string[];
+  selectedOptions: QuestionOption[];
 }
 
 export interface SummaryOption {
-  value: string;
+  option: QuestionOption;
   status: SummaryOptionStatus;
 }
 

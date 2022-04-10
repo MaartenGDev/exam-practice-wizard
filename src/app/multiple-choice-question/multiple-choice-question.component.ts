@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { SummaryOption, SummaryOptionStatus } from "../_models/question.model";
+import { QuestionOption, SummaryOption, SummaryOptionStatus } from "../_models/question.model";
 
 @Component({
   selector: 'app-multiple-choice-question',
@@ -8,28 +8,28 @@ import { SummaryOption, SummaryOptionStatus } from "../_models/question.model";
 })
 export class MultipleChoiceQuestionComponent {
   @Input()
-  options: string[] = [];
+  options: QuestionOption[] = [];
   @Output()
-  optionSelected = new EventEmitter<string>();
+  optionSelected = new EventEmitter<QuestionOption>();
   @Input()
   disabled = false;
   @Input()
   summaryOptions: SummaryOption[] = [];
 
-  selectedOptionChange(option: string){
-    this.optionSelected.next(option);
+  selectedOptionChange(optionValue: string){
+    this.optionSelected.next(this.options.find(o => o.value === optionValue)!);
   }
 
   getSummaryOption(option: string){
-    return this.summaryOptions.find(o => o.value === option);
+    return this.summaryOptions.find(so => so.option.value === option);
   }
 
-  isChecked(option: string): boolean {
-    return !!this.getSummaryOption(option);
+  isChecked(option: QuestionOption): boolean {
+    return !!this.getSummaryOption(option.value);
   }
 
-  showAsCorrect(option: string) {
-    const associatedSummaryOption = this.getSummaryOption(option);
+  showAsCorrect(option: QuestionOption) {
+    const associatedSummaryOption = this.getSummaryOption(option.value);
 
     if(!associatedSummaryOption){
       return false;
@@ -38,8 +38,8 @@ export class MultipleChoiceQuestionComponent {
     return associatedSummaryOption.status === SummaryOptionStatus.correct;
   }
 
-  showAsIncorrect(option: string) {
-    const associatedSummaryOption = this.getSummaryOption(option);
+  showAsIncorrect(option: QuestionOption) {
+    const associatedSummaryOption = this.getSummaryOption(option.value);
 
     if(!associatedSummaryOption){
       return false;
@@ -48,8 +48,8 @@ export class MultipleChoiceQuestionComponent {
     return associatedSummaryOption.status === SummaryOptionStatus.incorrect;
   }
 
-  showAsMissing(option: string) {
-    const associatedSummaryOption = this.getSummaryOption(option);
+  showAsMissing(option: QuestionOption) {
+    const associatedSummaryOption = this.getSummaryOption(option.value);
 
     if(!associatedSummaryOption){
       return false;
