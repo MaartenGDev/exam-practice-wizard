@@ -2,10 +2,10 @@
 Angular app to practice with exam questions.
 
 ## Preview
-### Single answers
-![](./docs/question_radio.png)
 ### Multiple answers
 ![](./docs/question_checkbox.png)
+### Single answers
+![](./docs/question_radio.png)
 ### Practice results
 ![](./docs/summary.png)
 
