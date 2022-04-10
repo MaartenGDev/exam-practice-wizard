@@ -1,0 +1,36 @@
+.radio-list{
+  display: flex;
+  flex-direction: column;
+}
+.radio-button {
+  margin: 0 10px;
+}
+
+::ng-deep .mat-checkbox.summary-correct {
+  .mat-checkbox-background {
+    background-color: green !important;
+  }
+  .mat-checkbox-frame {
+    border-color: green !important;
+  }
+}
+
+::ng-deep .mat-checkbox.summary-incorrect {
+  .mat-checkbox-background {
+    background-color: red !important;;
+  }
+
+  .mat-checkbox-frame {
+    border-color: red !important;
+  }
+}
+
+::ng-deep .mat-checkbox.summary-missing {
+  .mat-checkbox-background {
+    background-color: orange !important;;
+  }
+
+  .mat-checkbox-frame {
+    border-color: orange !important;
+  }
+}

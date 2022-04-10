@@ -1,0 +1,41 @@
+<div class="quiz-page">
+  <div class="quiz-content">
+    <h2 class="quiz-title" *ngIf="!showSummary">Question {{currentQuestionIndex + 1}}/{{questions.length}}</h2>
+    <h1 class="quiz-title" *ngIf="showSummary">Summary</h1>
+
+    <mat-card *ngIf="!showSummary">
+      <mat-card-subtitle>{{questions[currentQuestionIndex].question}}</mat-card-subtitle>
+
+      <p *ngIf="showExplanation" class="answer-result">
+        <span class="answer-result-label" [class.correct-answer]="hasAnsweredCorrectly" [class.incorrect-answer]="!hasAnsweredCorrectly">{{hasAnsweredCorrectly ? 'Correct' : 'Incorrect'}}</span>
+        {{questions[currentQuestionIndex].explanation}}</p>
+
+      <app-multiple-choice-question
+        *ngIf="questions[currentQuestionIndex].correctOptions.length === 1"
+        [options]="questions[currentQuestionIndex].options"
+        (optionSelected)="optionsSelected([$event])"
+        [disabled]="showExplanation"
+      >
+      </app-multiple-choice-question>
+
+      <app-multi-select-question
+        *ngIf="questions[currentQuestionIndex].correctOptions.length > 1"
+        [options]="questions[currentQuestionIndex].options"
+        (allOptionsSelected)="optionsSelected($event)"
+        [disabled]="showExplanation"
+      >
+      </app-multi-select-question>
+
+      <mat-card-actions *ngIf="showExplanation">
+        <button mat-button (click)="nextQuestion()">NEXT</button>
+      </mat-card-actions>
+    </mat-card>
+
+    <app-quiz-summary
+      *ngIf="showSummary"
+      [answers]="questionAnswers"
+      (restartQuiz)="restartQuiz()"
+    >
+    </app-quiz-summary>
+  </div>
+</div>

@@ -1,0 +1,31 @@
+.quiz-page {
+  display: flex;
+  justify-content: center;
+}
+
+.quiz-content {
+  margin-top: 50px;
+  width: 50%;
+}
+
+.quiz-title {
+  margin-bottom: 5px;
+}
+
+.answer-result{
+  padding: 10px 0;
+}
+
+.answer-result-label {
+  font-weight: bold;
+  padding: 5px 10px;
+}
+
+.correct-answer {
+  background-color: green;
+  color: white;
+}
+
+.incorrect-answer {
+  background-color: red;
+}

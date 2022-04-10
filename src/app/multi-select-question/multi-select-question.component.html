@@ -1,0 +1,15 @@
+<section class="radio-list">
+  <mat-checkbox
+    *ngFor="let option of options"
+    class="radio-button"
+    (change)="optionChecked(option, $event.checked)"
+    [class.summary-correct]="showAsCorrect(option)"
+    [class.summary-incorrect]="showAsIncorrect(option)"
+    [class.summary-missing]="showAsMissing(option)"
+    [value]="option"
+    [disabled]="disabled"
+    [checked]="isChecked(option)"
+  >
+    {{option}}
+  </mat-checkbox>
+</section>

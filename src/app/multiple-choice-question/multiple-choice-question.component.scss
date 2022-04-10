@@ -1,0 +1,35 @@
+.options-radio-group {
+  display: flex;
+  flex-direction: column;
+  margin: 15px 0;
+  align-items: flex-start;
+}
+
+.radio-button {
+  margin: 5px;
+}
+
+::ng-deep .mat-radio-button.summary-correct {
+  .mat-radio-inner-circle {
+    background-color: green !important;
+  }
+  .mat-radio-outer-circle {
+    border-color: green !important;
+  }
+}
+
+::ng-deep .mat-radio-button.summary-incorrect {
+  .mat-radio-inner-circle {
+    background-color: red !important;;
+  }
+
+  .mat-radio-outer-circle {
+    border-color: red !important;
+  }
+}
+
+::ng-deep .mat-radio-button.summary-missing {
+  .mat-radio-outer-circle {
+    border-color: red !important;
+  }
+}
