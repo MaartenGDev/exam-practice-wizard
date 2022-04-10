@@ -1,7 +1,7 @@
 <div>
   <h2>{{getAmountOfCorrectQuestions()}}/{{answers.length}} Correct</h2>
   <div *ngFor="let answer of answers">
-    <p><b>{{answer.question.question}}</b></p>
+    <p><b [innerHTML]="answer.question.question"></b></p>
 
     <app-multiple-choice-question
       *ngIf="answer.question.correctOptions.length === 1"
