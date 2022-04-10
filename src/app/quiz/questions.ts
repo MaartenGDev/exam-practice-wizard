@@ -31,5 +31,24 @@ export const EXAM_QUESTIONS: Question[] = [
     ],
     correctOptions: ['B', 'D', 'F'],
     explanation: 'A traffic light in the Netherlands goes from Red to Green and from Green to Orange to Red.'
+  },
+  {
+    question: "How many workdays does a week have?",
+    options: [
+      {
+        value: 'A',
+        label: '6 days'
+      },
+      {
+        value: 'B',
+        label: '5 days'
+      },
+      {
+        value: 'C',
+        label: '7 days'
+      }
+    ],
+    correctOptions: ['B'],
+    explanation: 'A regular work week consists of 5 days, monday till friday.'
   }
 ];

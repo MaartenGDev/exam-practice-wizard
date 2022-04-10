@@ -9,7 +9,9 @@
       <fieldset *ngIf="showExplanation" class="answer-result">
         <legend><span class="answer-result-label" [class.correct-answer]="hasAnsweredCorrectly" [class.incorrect-answer]="!hasAnsweredCorrectly">{{hasAnsweredCorrectly ? 'Correct' : 'Incorrect'}}</span></legend>
 
-        <p><b>Correct Answers</b>: {{getFormattedCorrectOptions(questions[currentQuestionIndex])}}</p>
+        <p>
+          <b>Correct Answer{{questions[currentQuestionIndex].correctOptions.length > 1 ? 's' : ''}}</b>:
+          {{getFormattedCorrectOptions(questions[currentQuestionIndex])}}</p>
         <p>{{questions[currentQuestionIndex].explanation}}</p>
       </fieldset>
 
