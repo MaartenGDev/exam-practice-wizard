@@ -1,4 +1,5 @@
 export interface Question {
+  name: string;
   question: string;
   options: QuestionOption[];
   correctOptions: string[];

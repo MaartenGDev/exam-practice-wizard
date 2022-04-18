@@ -2,9 +2,6 @@
   display: flex;
   flex-direction: column;
 }
-.radio-button {
-  margin: 0 10px;
-}
 
 ::ng-deep .mat-checkbox.summary-correct {
   .mat-checkbox-background {
@@ -33,4 +30,8 @@
   .mat-checkbox-frame {
     border-color: orange !important;
   }
+}
+
+.checkbox-cell {
+  vertical-align: top;
 }

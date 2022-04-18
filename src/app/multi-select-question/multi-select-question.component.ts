@@ -1,12 +1,12 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { QuestionAnswer, QuestionOption, SummaryOption, SummaryOptionStatus } from "../_models/question.model";
+import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
+import { QuestionOption, SummaryOption, SummaryOptionStatus } from "../_models/question.model";
 
 @Component({
   selector: 'app-multi-select-question',
   templateUrl: './multi-select-question.component.html',
   styleUrls: ['./multi-select-question.component.scss']
 })
-export class MultiSelectQuestionComponent implements OnInit {
+export class MultiSelectQuestionComponent implements OnChanges {
   @Input()
   options: QuestionOption[] = [];
   @Input()
@@ -20,11 +20,6 @@ export class MultiSelectQuestionComponent implements OnInit {
 
   @Output()
   allOptionsSelected = new EventEmitter<QuestionOption[]>();
-
-  constructor() { }
-
-  ngOnInit(): void {
-  }
 
   optionChecked(changedOption: QuestionOption, checked: boolean) {
     if(checked){
@@ -43,7 +38,7 @@ export class MultiSelectQuestionComponent implements OnInit {
   }
 
   isChecked(option: QuestionOption): boolean {
-    return !!this.getSummaryOption(option.value);
+    return this.selectedOptions.includes(option) || !!this.getSummaryOption(option.value);
   }
 
   showAsCorrect(option: QuestionOption) {
@@ -74,5 +69,11 @@ export class MultiSelectQuestionComponent implements OnInit {
     }
 
     return associatedSummaryOption.status === SummaryOptionStatus.missing;
+  }
+
+  ngOnChanges(changes: SimpleChanges): void {
+    if(changes['options']) {
+      this.selectedOptions = [];
+    }
   }
 }

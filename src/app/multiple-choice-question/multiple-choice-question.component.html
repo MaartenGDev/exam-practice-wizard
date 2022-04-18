@@ -2,16 +2,24 @@
   aria-labelledby="options-radio-group-label"
   class="options-radio-group"
   (change)="selectedOptionChange($event.value)">
-  <mat-radio-button
-    *ngFor="let option of options"
-    class="radio-button"
-    [class.summary-correct]="showAsCorrect(option)"
-    [class.summary-incorrect]="showAsIncorrect(option)"
-    [class.summary-missing]="showAsMissing(option)"
-    [value]="option.value"
-    [disabled]="disabled"
-    [checked]="isChecked(option)"
-  >
-    {{option.value}}. {{option.label}}
-  </mat-radio-button>
+  <table>
+    <tr  *ngFor="let option of options">
+      <td class="radio-button-cell">
+        <mat-radio-button
+          class="radio-button"
+          [class.summary-correct]="showAsCorrect(option)"
+          [class.summary-incorrect]="showAsIncorrect(option)"
+          [class.summary-missing]="showAsMissing(option)"
+          [value]="option.value"
+          [disabled]="disabled"
+          [checked]="isChecked(option)"
+        >
+          {{option.value}}.
+        </mat-radio-button>
+      </td>
+      <td>
+        {{option.label}}
+      </td>
+    </tr>
+  </table>
 </mat-radio-group>

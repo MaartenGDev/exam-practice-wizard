@@ -4,7 +4,7 @@
     <h1 class="quiz-title" *ngIf="showSummary">Summary</h1>
 
     <mat-card *ngIf="!showSummary">
-      <mat-card-subtitle [innerHTML]="questions[currentQuestionIndex].question"></mat-card-subtitle>
+      <mat-card-subtitle class="question-text" [innerHTML]="questions[currentQuestionIndex].question"></mat-card-subtitle>
 
       <fieldset *ngIf="showExplanation" class="answer-result">
         <legend><span class="answer-result-label" [class.correct-answer]="hasAnsweredCorrectly" [class.incorrect-answer]="!hasAnsweredCorrectly">{{hasAnsweredCorrectly ? 'Correct' : 'Incorrect'}}</span></legend>
@@ -17,7 +17,7 @@
 
       <app-multiple-choice-question
         *ngIf="questions[currentQuestionIndex].correctOptions.length === 1"
-        [options]="questions[currentQuestionIndex].options"
+        [options]="shuffledCurrentQuestionOptions"
         (optionSelected)="optionsSelected([$event])"
         [disabled]="showExplanation"
       >
@@ -25,7 +25,7 @@
 
       <app-multi-select-question
         *ngIf="questions[currentQuestionIndex].correctOptions.length > 1"
-        [options]="questions[currentQuestionIndex].options"
+        [options]="shuffledCurrentQuestionOptions"
         [correctAmountOfOptions]="questions[currentQuestionIndex].correctOptions.length"
         (allOptionsSelected)="optionsSelected($event)"
         [disabled]="showExplanation"

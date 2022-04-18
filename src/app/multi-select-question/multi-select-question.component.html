@@ -1,15 +1,21 @@
 <section class="radio-list">
-  <mat-checkbox
-    *ngFor="let option of options"
-    class="radio-button"
-    (change)="optionChecked(option, $event.checked)"
-    [class.summary-correct]="showAsCorrect(option)"
-    [class.summary-incorrect]="showAsIncorrect(option)"
-    [class.summary-missing]="showAsMissing(option)"
-    [value]="option.value"
-    [disabled]="disabled"
-    [checked]="isChecked(option)"
-  >
-    {{option.value}}. {{option.label}}
-  </mat-checkbox>
+  <table>
+    <tr  *ngFor="let option of options">
+      <td class="checkbox-cell">
+        <mat-checkbox
+        class="radio-button"
+        (change)="optionChecked(option, $event.checked)"
+        [class.summary-correct]="showAsCorrect(option)"
+        [class.summary-incorrect]="showAsIncorrect(option)"
+        [class.summary-missing]="showAsMissing(option)"
+        [value]="option.value"
+        [disabled]="disabled"
+        [checked]="isChecked(option)"
+      >
+        {{option.value}}.
+      </mat-checkbox></td>
+      <td><span (click)="optionChecked(option, !isChecked(option))">{{option.label}}</span></td>
+    </tr>
+  </table>
+
 </section>

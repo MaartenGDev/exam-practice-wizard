@@ -8,9 +8,11 @@ import { EXAM_QUESTIONS } from "./questions";
   styleUrls: ['./quiz.component.scss']
 })
 export class QuizComponent implements OnInit {
-  questions: Question[] = EXAM_QUESTIONS;
+  questions: Question[] = [];
   questionAnswers: QuestionAnswer[] = [];
   currentQuestionIndex = 0;
+
+  shuffledCurrentQuestionOptions: QuestionOption[] = [];
 
   showExplanation = false;
   hasAnsweredCorrectly = false;
@@ -20,6 +22,8 @@ export class QuizComponent implements OnInit {
   constructor() { }
 
   ngOnInit(): void {
+    this.questions = this.getAsShuffledArray(EXAM_QUESTIONS);
+    this.shuffledCurrentQuestionOptions = this.getAsShuffledArray(this.questions[this.currentQuestionIndex].options);
   }
 
   optionsSelected(selectedOptions: QuestionOption[]) {
@@ -51,6 +55,7 @@ export class QuizComponent implements OnInit {
     }
 
     this.currentQuestionIndex++;
+    this.shuffledCurrentQuestionOptions = this.getAsShuffledArray<QuestionOption>(this.questions[this.currentQuestionIndex].options);
   }
 
   restartQuiz() {
@@ -64,5 +69,16 @@ export class QuizComponent implements OnInit {
 
   getFormattedCorrectOptions(question: Question) {
     return question.correctOptions.join(', ')
+  }
+
+  getAsShuffledArray<T>(array: T[]) {
+    const shuffledArray = [...array];
+
+    for (let i = shuffledArray.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [shuffledArray[i], shuffledArray[j]] = [shuffledArray[j], shuffledArray[i]];
+    }
+
+    return shuffledArray;
   }
 }
