@@ -18,7 +18,7 @@
         </mat-radio-button>
       </td>
       <td>
-        {{option.label}}
+        <span (click)="selectedOptionChange(option.value)">{{option.label}}</span>
       </td>
     </tr>
   </table>

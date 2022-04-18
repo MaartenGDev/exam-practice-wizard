@@ -16,8 +16,13 @@ export class MultipleChoiceQuestionComponent {
   @Input()
   summaryOptions: SummaryOption[] = [];
 
+  selectedOption: QuestionOption|undefined = undefined;
+
   selectedOptionChange(optionValue: string){
-    this.optionSelected.next(this.options.find(o => o.value === optionValue)!);
+    const selectedOption = this.options.find(o => o.value === optionValue)!;
+    this.selectedOption = selectedOption;
+
+    this.optionSelected.next(selectedOption);
   }
 
   getSummaryOption(option: string){
@@ -25,7 +30,7 @@ export class MultipleChoiceQuestionComponent {
   }
 
   isChecked(option: QuestionOption): boolean {
-    return !!this.getSummaryOption(option.value);
+    return this.selectedOption === option || !!this.getSummaryOption(option.value);
   }
 
   showAsCorrect(option: QuestionOption) {
